@@ -1,0 +1,8 @@
+<h1>{{ question }}</h1>
+<br>
+<p>Choices:</p>
+<ul>
+    {% for c in question.choice_set.all %}
+    <li>{{c}}<li>
+    {% endfor %}
+</ul>
