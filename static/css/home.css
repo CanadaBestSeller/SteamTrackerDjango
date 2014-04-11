@@ -1,0 +1,16 @@
+.jumbotron h1 {
+    font-family: Georgia;
+}
+
+.jumbotron h2 {
+    font-family: Calibri;
+}
+
+p {
+    font-family: Calibri;
+}
+
+a.navbar-brand {
+    font-family: Calibri;
+    font-weight: bold;
+}
