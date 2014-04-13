@@ -8,4 +8,5 @@ urlpatterns = patterns('',
     url(r'^$', 'home.views.index', name='index'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^polls/', include('polls.urls', namespace='polls')),
+    url(r'^steam_tracker/', include('steamTracker.urls', namespace='steamTracker')),
 )

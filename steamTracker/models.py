@@ -1,13 +1,7 @@
 from django.db import models
 from django.utils.encoding import smart_unicode
 
-from time import mktime
-from datetime import datetime
-
-import urllib
-import re
-import json
-import time
+from steamTracker.utils import Utils
 
 # Create your models here.
 
@@ -37,17 +31,9 @@ class CsgoItem(models.Model):
         return self.fullname
 
     def get_transactions(self):
-        request = urllib.urlopen(self.url)
-        source_code = request.read()
-
-        pattern = "var line1=(\[\[.*?\]\]);"
-        matches = re.search(pattern, source_code)
-        transactions_string = matches.groups()[0]
-
-        decoder = json.JSONDecoder()
-        t_string_array = decoder.decode(transactions_string)
+        transactions_string = Utils.get_transactions_string_from_url(self.url)
+        t_string_array = Utils.json_to_array(transactions_string)
         t_array = map(Utils.transaction_string_array_to_transaction, t_string_array)
-
         return t_array
 
 class CsgoItemTransaction(models.Model):
@@ -58,22 +44,3 @@ class CsgoItemTransaction(models.Model):
 
     def __unicode__(self):
         return self.csgo_item.fullname
-
-class Utils:
-    @staticmethod
-    def datetime_string_to_datetime(date_string):
-        pattern = "%a, %d %b %Y %H:%M:%S +0000"
-        time_value = time.strptime(date_string, pattern)
-        datetime_value = datetime.fromtimestamp(mktime(time_value))
-        return datetime_value
-
-    @staticmethod
-    def sold_string_to_int(sold_string):
-        return int(re.split(' ', sold_string)[0])
-
-    @staticmethod
-    def transaction_string_array_to_transaction(transaction_string_array):
-        transaction_time = Utils.datetime_string_to_datetime(transaction_string_array[0])
-        average_price = float(transaction_string_array[1])
-        copies_sold = Utils.sold_string_to_int(transaction_string_array[2])
-        return [transaction_time, average_price, copies_sold]

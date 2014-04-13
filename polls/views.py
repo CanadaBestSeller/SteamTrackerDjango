@@ -5,6 +5,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.views import generic
 
+from steamTracker.utils import Utils
+
 # Create your views here.
 
 class IndexView(generic.ListView):
@@ -29,6 +31,7 @@ class ResultsView(generic.DetailView):
 
 
 def vote(request, question_id):
+    Utils.log(request.POST)
     question = get_object_or_404(Question, pk=question_id)
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])

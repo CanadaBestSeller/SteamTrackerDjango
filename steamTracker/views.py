@@ -1,10 +1,8 @@
 from django.shortcuts import render
+from steamTracker.utils import Utils
 
 # Create your views here.
 
-class SteamTracker(models.Model):
-    firstName = models.CharField(max_length=120, null=True, blank=True)
-    lastName = models.CharField(max_length=120, null=True, blank=True)
-    email = models.Email()
-    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
-    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+def test(request):
+    Utils.log(request)
+    return render(request, 'steamTracker/test.html')

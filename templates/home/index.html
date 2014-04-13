@@ -62,8 +62,13 @@
     <div class="jumbotron">
       <div class="container">
         <h1>Sup.</h1>
-        <p>This website keeps track of Steam Marketplace items for you, just like a stock broker.<br><br>Bitches love stock brokers.</p>
-        <p><a class="btn btn-primary btn-lg" role="button">Learn more &raquo;</a></p>
+        <p>This website keeps track of Steam Marketplace items for you, just like a stock broker.<br><br>Bitches love stock brokers.<br><br></p>
+          <form action="{% url 'steamTracker:test' %}" method="post">
+            <div class="form-group">
+              <input id="urlInput" type="text" placeholder="CS:GO Item URL" class="form-control">
+            </div>
+            <p><input class="btn btn-primary btn-lg" type="submit" role="button" value="Check transactions &raquo;"</a></p>
+          </form>
       </div>
     </div>
 
